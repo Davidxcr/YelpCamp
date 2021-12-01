@@ -19,7 +19,6 @@ const userRoutes = require('./routes/user')
 const campgroundRoutes = require("./routes/campgrounds");
 const reviewRoutes = require("./routes/reviews");
 const MongoDBStore = require("connect-mongo");
-
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
@@ -117,6 +116,7 @@ app.use(
                 "https://res.cloudinary.com/david-codes/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
                 "https://images.unsplash.com/",
             ],
+            childSrc: ["blob:"],
             fontSrc: ["'self'", ...fontSrcUrls],
         },
     })
