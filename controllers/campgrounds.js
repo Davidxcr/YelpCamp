@@ -34,13 +34,21 @@ module.exports.showCampground = async (req, res) => {
         populate: {
             path: 'author'
         }
-    }).populate('author')
+    }).populate('author');
+
     if (!campground) {
-        req.flash('error', 'Campground not found!')
-        return res.redirect('/campgrounds')
+        req.flash('error', 'Campground not found!');
+        return res.redirect('/campgrounds');
     }
-    res.render('campgrounds/show', { campground })
-}
+
+    if (!campground.author) {
+        req.flash('error', 'Author not found for this campground');
+        return res.redirect('/campgrounds');
+    }
+
+    res.render('campgrounds/show', { campground });
+};
+
 
 module.exports.renderEditForm = async (req, res) => {
     const { id } = req.params

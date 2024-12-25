@@ -30,6 +30,28 @@
         <span class="visually-hidden">Next</span>
       </button>
       <% } %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title"><%= campground.title %></h5>
+          <p class="card-text"><%= campground.description %></p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item text-muted"><%= campground.location %></li>
+          <li class="list-group-item">
+            <% if (campground.author) { %>
+              Submitted by: <%= campground.author.username %>
+            <% } else { %>
+              Submitted by: Unknown
+            <% } %>
+          </li>
+          <li class="list-group-item">$<%= campground.price %>/night</li>
+        </ul>
+        <% if(currentUser && campground.author && campground.author.equals(currentUser._id)) { %>
+        <div class="card-body">
+          <a class="card-link btn btn-info" href="#">Edit</a>
+        </div>
+        <% } %>
+      </div>
     </div>
     <div class="card mb-3">
       <div class="card-body">
@@ -39,10 +61,19 @@
       <ul class="list-group list-group-flush">
         <li class="list-group-item text-muted"><%= campground.location %></li>
         <li class="list-group-item">
-          Submitted by: <%= campground.author.username %>
+          <% if (campground.author) { %>
+            Submitted by: <%= campground.author.username %>
+          <% } else { %>
+            Submitted by: Unknown
+          <% } %>
         </li>
         <li class="list-group-item">$<%= campground.price %>/night</li>
       </ul>
+      <% if(currentUser && campground.author && campground.author.equals(currentUser._id)) { %>
+      <div class="card-body">
+        <a class="card-link btn btn-info" href="#">Edit</a>
+      </div>
+      <% } %>
       <% if(currentUser && campground.author.equals(currentUser._id)) { %>
       <div class="card-body">
         <a
@@ -158,7 +189,7 @@
 </div>
 
 <script>
-  const mapToken = '<%-process.env.MAPBOX_TOKEN%>'
+  const mapToken = '<%- process.env.MAPBOX_TOKEN%>'
   const campground = <%- JSON.stringify(campground) %>
 </script>
 <script src="/javascripts/showPageMap.js"></script>

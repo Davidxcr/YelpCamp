@@ -81,6 +81,9 @@ const scriptSrcUrls = [
     "https://kit.fontawesome.com/",
     "https://cdnjs.cloudflare.com/",
     "https://cdn.jsdelivr.net",
+    "https://app.intercom.io",
+    "https://widget.intercom.io",
+    "https://js.intercomcdn.com"
 ];
 const styleSrcUrls = [
     "https://kit-free.fontawesome.com/",
@@ -96,8 +99,31 @@ const connectSrcUrls = [
     "https://a.tiles.mapbox.com/",
     "https://b.tiles.mapbox.com/",
     "https://events.mapbox.com/",
+    "https://api.mapbox.com/",
+    "https://a.tiles.mapbox.com/",
+    "https://b.tiles.mapbox.com/",
+    "https://events.mapbox.com/",
+    "https://via.intercom.io",
+    "https://api.intercom.io",
+    "https://api.au.intercom.io",
+    "https://api.eu.intercom.io",
+    "https://api-iam.intercom.io",
+    "https://api-iam.eu.intercom.io",
+    "https://api-iam.au.intercom.io",
+    "https://api-ping.intercom.io",
+    "https://nexus-websocket-a.intercom.io",
+    "wss://nexus-websocket-a.intercom.io",
+    "https://nexus-websocket-b.intercom.io",
+    "wss://nexus-websocket-b.intercom.io",
+    "https://nexus-europe-websocket.intercom.io",
+    "wss://nexus-europe-websocket.intercom.io",
+    "https://nexus-australia-websocket.intercom.io",
+    "wss://nexus-australia-websocket.intercom.io"
 ];
-const fontSrcUrls = [];
+const fontSrcUrls = [
+    "https://js.intercomcdn.com",
+    "https://fonts.intercomcdn.com"
+];
 app.use(
     helmet.contentSecurityPolicy({
         directives: {
@@ -111,8 +137,31 @@ app.use(
                 "'self'",
                 "blob:",
                 "data:",
-                "https://res.cloudinary.com/david-codes/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
+                "https://res.cloudinary.com/david-codes/", // Should match your Cloudinary account
                 "https://images.unsplash.com/",
+                "https://uploads.intercomcdn.com",
+                "https://uploads.intercomcdn.eu",
+                "https://uploads.au.intercomcdn.com",
+                "https://uploads.eu.intercomcdn.com",
+                "https://uploads.intercomusercontent.com",
+                "https://via.intercom.io",
+                "https://api.intercom.io",
+                "https://api.au.intercom.io",
+                "https://api.eu.intercom.io",
+                "https://api-iam.intercom.io",
+                "https://api-iam.eu.intercom.io",
+                "https://api-iam.au.intercom.io",
+                "https://api-ping.intercom.io",
+                "https://nexus-websocket-a.intercom.io",
+                "wss://nexus-websocket-a.intercom.io",
+                "https://nexus-websocket-b.intercom.io",
+                "wss://nexus-websocket-b.intercom.io",
+                "https://nexus-europe-websocket.intercom.io",
+                "wss://nexus-europe-websocket.intercom.io",
+                "https://nexus-australia-websocket.intercom.io",
+                "wss://nexus-australia-websocket.intercom.io",
+                "https://downloads.intercomcdn.com",
+                "https://static.intercomassets.com"
             ],
             childSrc: ["blob:"],
             fontSrc: ["'self'", ...fontSrcUrls],
@@ -139,6 +188,12 @@ app.use((req, res, next) => {
 app.use('/', userRoutes)
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/reviews", reviewRoutes);
+
+// Login route
+app.get('/login', (req, res) => {
+    res.render('boilerplate', { currentUser: req.user });
+});
+
 
 app.get("/", (req, res) => {
     res.render("home");

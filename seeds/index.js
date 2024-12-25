@@ -3,8 +3,9 @@ const mongoose = require('mongoose')
 const cities = require('./cities')
 const { places, descriptors } = require('./seedHelpers')
 const Campground = require('../models/campground')
+const User = require('../models/user')
 
-const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
+const dbUrl = process.env.DB_URL;
 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
@@ -21,12 +22,18 @@ db.once("open", () => {
 const sample = array => array[Math.floor(Math.random() * array.length)]
 
 const seedDB = async () => {
+    const existingUser = await User.findOne();
+    if (!existingUser) {
+        console.error('No user found, please create a user first');
+        process.exit(1);
+    }
+
     await Campground.deleteMany({})
     for (let i = 0; i < 300; i++) {
         const random1000 = Math.floor(Math.random() * 1000)
         const price = Math.floor(Math.random() * 30) + 10;
         const camp = new Campground({
-            author: '619bf794c76d7a0d13a9c0d4',
+            author: existingUser || '63b277c3879401d32fc2537f',
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
             description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.Doloremque libero earum et voluptates ? Obcaecati harum illo quasi.Iste, quasi sapiente labore ex velit, distinctio accusantium a quidem unde, ea mollitia!',
