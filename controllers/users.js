@@ -32,7 +32,7 @@ module.exports.login = (req, res) => {
 }
 
 module.exports.logout = (req, res) => {
-        Intercom('shutdown');
+    Intercom('shutdown');
     req.logout(() => {
         req.flash('success', 'Logged Out')
         res.redirect('/campgrounds')
