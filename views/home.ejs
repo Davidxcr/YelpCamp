@@ -62,9 +62,14 @@
     ></script>
     <script>
       window.intercomSettings = {
-        api_base: "https://api-iam.intercom.io",
-        app_id: "mthemgos"
-      };
+          api_base: "https://api-iam.intercom.io",
+          app_id: "mthemgos",
+          <% if (currentUser) { %>
+            email: "<%= currentUser.email %>",
+            user_id: "<%= currentUser._id %>",
+            name: "<%= currentUser.username %>"
+          <% } %>
+        };
     </script>
     <script>
       (function(){

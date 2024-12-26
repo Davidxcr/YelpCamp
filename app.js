@@ -193,6 +193,10 @@ app.use("/campgrounds/:id/reviews", reviewRoutes);
 app.get('/login', (req, res) => {
     res.render('boilerplate', { currentUser: req.user });
 });
+//Logout route
+app.get('/logout', (req, res) => {
+    res.render('/logout');
+});
 
 
 app.get("/", (req, res) => {

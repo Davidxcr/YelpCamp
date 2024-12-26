@@ -23,9 +23,25 @@
         <a class="nav-link" href="/login">Login</a>
         <a class="nav-link" href="/register">Register</a>
         <% } else {%>
-        <a class="nav-link" href="/logout">Logout</a>
+          <a class="nav-link" id="logoutButton" href="/logout">
+            Logout
+          </a>        
         <% } %>
       </div>
     </div>
   </div>
 </nav>
+<script>
+   document.addEventListener('DOMContentLoaded', (event) => {
+    const logoutButton = document.querySelector('#logoutButton');
+    if (logoutButton) {
+      logoutButton.addEventListener('click', (event) => {
+        event.preventDefault(); // Prevent default link behavior
+        if (typeof Intercom !== 'undefined') {
+          Intercom('shutdown'); // Shut down Intercom
+        }
+        window.location.href = '/logout'; // Redirect to the logout route
+      });
+    }
+  });
+</script>
