@@ -145,6 +145,7 @@ app.use(
                 "https://uploads.au.intercomcdn.com",
                 "https://uploads.eu.intercomcdn.com",
                 "https://uploads.intercomusercontent.com",
+                "https://js.intercomcdn.com",
                 "https://via.intercom.io",
                 "https://api.intercom.io",
                 "https://api.au.intercom.io",
