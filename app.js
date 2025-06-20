@@ -15,6 +15,7 @@ const mongoSanitize = require('express-mongo-sanitize')
 const userRoutes = require('./routes/user')
 const campgroundRoutes = require("./routes/campgrounds");
 const reviewRoutes = require("./routes/reviews");
+const apiRoutes = require('./routes/api');  // Add API routes
 const MongoDBStore = require("connect-mongo");
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/myFirstDatabase';
 mongoose.connect(dbUrl, {
@@ -190,6 +191,9 @@ app.use((req, res, next) => {
 app.use('/', userRoutes)
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/reviews", reviewRoutes);
+console.log('🔗 Registering API routes at /api');
+app.use('/api', apiRoutes);
+console.log('✅ All routes registered successfully');
 
 // Login route
 app.get('/login', (req, res) => {
@@ -206,12 +210,33 @@ app.get("/", (req, res) => {
 });
 
 app.all("*", (req, res, next) => {
+    // Handle API 404s with JSON response
+    if (req.path.startsWith('/api')) {
+        return res.status(404).json({
+            success: false,
+            error: "API endpoint not found",
+            path: req.path
+        });
+    }
+    
+    // For non-API requests, use the standard error handler
     next(new ExpressError("Page Not Found", 404));
 });
 
 app.use((err, req, res, next) => {
     const { statusCode = 500 } = err;
     if (!err.message) err.message = "Oh No Something Went Wrong!";
+    
+    // Check if this is an API request
+    if (req.path.startsWith('/api')) {
+        return res.status(statusCode).json({
+            success: false,
+            error: err.message,
+            ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
+        });
+    }
+    
+    // For non-API requests, render the error page
     res.status(statusCode).render("error", { err });
 });
 
