@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node seeds/index.js && node app.js"
+    "start": "node app.js",
+    "seed": "node seeds/index.js",
+    "dev": "nodemon app.js",
+    "setup": "node seeds/index.js && node app.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +23,7 @@
   "homepage": "https://github.com/Davidxcr/YelpCamp#readme",
   "dependencies": {
     "@mapbox/mapbox-sdk": "^0.13.2",
-    "cloudinary": "^1.27.1",
+    "cloudinary": "^1.41.3",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^4.6.0",
     "dotenv": "^10.0.0",
@@ -36,6 +39,7 @@
     "mongoose": "^6.8.2",
     "multer": "^1.4.3",
     "multer-storage-cloudinary": "^4.0.0",
+    "node-fetch": "^3.3.2",
     "nodemon": "^3.1.9",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",

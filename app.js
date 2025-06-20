@@ -16,7 +16,7 @@ const userRoutes = require('./routes/user')
 const campgroundRoutes = require("./routes/campgrounds");
 const reviewRoutes = require("./routes/reviews");
 const MongoDBStore = require("connect-mongo");
-const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/myFirstDatabase';
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -138,6 +138,7 @@ app.use(
                 "blob:",
                 "data:",
                 "https://res.cloudinary.com/david-codes/", // Should match your Cloudinary account
+                "https://res.cloudinary.com/djsoqjxpg/", // Your actual Cloudinary account
                 "https://images.unsplash.com/",
                 "https://uploads.intercomcdn.com",
                 "https://uploads.intercomcdn.eu",
